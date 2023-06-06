@@ -6,8 +6,10 @@ export default function Layout() {
     <div className="flex">
       <Sidebar />
       <main id="main" className="flex-1 p-4">
-        <ToggleSidebarButton />
-        <h1 className="text-2xl font-bold mb-4">Month Report</h1>
+        <div className="flex items-center">
+          <ToggleSidebarButton text="&gt;" />
+          <h1 className="text-2xl font-bold ml-4">Month Report</h1>
+        </div>
         <p>This is the content for the Month Report page.</p>
       </main>
     </div>
