@@ -1,4 +1,41 @@
+import LinkList from "./link-list";
 import ToggleSidebarButton from "./toggle-sidebar-button";
+
+const databaseLinks = [
+  {
+    href: 'expense-group.html',
+    innerText: 'Expense Group'
+  },
+  {
+    href: 'expense.html',
+    innerText: 'Expense'
+  },
+  {
+    href: 'account.html',
+    innerText: 'Account'
+  },
+  {
+    href: 'filter.html',
+    innerText: 'Filter'
+  },
+]
+
+const reportLinks = [
+  {
+    href: 'month-report.html',
+    innerText: 'Month Report'
+  },
+  {
+    href: 'account-report.html',
+    innerText: 'Account Report'
+  },
+  {
+    href: 'register-expenses.html',
+    innerText: 'Register Expenses'
+  },
+]
+
+export type LinksListType = typeof databaseLinks;
 
 export default function Sidebar() {
   return (
@@ -8,20 +45,9 @@ export default function Sidebar() {
         <ToggleSidebarButton text="&times;" />
       </div>
 
-      <ul className="list-none p-0">
-        <li><a href="month-report.html" className="block py-2 px-4 hover:bg-gray-300">Month Report</a></li>
-        <li><a href="account-report.html" className="block py-2 px-4 hover:bg-gray-300">Account Report</a></li>
-        <li><a href="register-expenses.html" className="block py-2 px-4 hover:bg-gray-300">Register Expenses</a></li>
-        <li className="mt-4">
-          Database
-          <ul className="list-none p-0 ml-4">
-            <li><a href="expense-group.html" className="block py-2 px-4 hover:bg-gray-300">Expense Group</a></li>
-            <li><a href="expense.html" className="block py-2 px-4 hover:bg-gray-300">Expense</a></li>
-            <li><a href="account.html" className="block py-2 px-4 hover:bg-gray-300">Account</a></li>
-            <li><a href="filter.html" className="block py-2 px-4 hover:bg-gray-300">Filter</a></li>
-          </ul>
-        </li>
-      </ul>
+      <LinkList linkArray={reportLinks} listName='Reports'></LinkList>
+
+      <LinkList linkArray={databaseLinks} listName='Database'></LinkList>
 
     </dialog>
   )
