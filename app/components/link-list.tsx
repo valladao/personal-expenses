@@ -1,3 +1,4 @@
+import {Link} from "@remix-run/react";
 import type {LinksListType} from "./sidebar";
 
 export default function LinkList({linkArray, listName}: {linkArray: LinksListType, listName: string}) {
@@ -8,9 +9,13 @@ export default function LinkList({linkArray, listName}: {linkArray: LinksListTyp
       </div>
       <ul className="list-none p-0 ml-1">
         {linkArray.map((link, index) => (
-          <li key={index}>
-            <a href={link.href} className="block py-1 pl-2 hover:bg-zinc-700 hover:text-white text-zinc-100">{link.innerText}</a>
-          </li>
+          <Link
+            key={index}
+            to={link.href}
+            className="block py-1 pl-2 hover:bg-zinc-700 hover:text-white text-zinc-100"
+          >
+            {link.innerText}
+          </Link>
         ))}
       </ul>
     </div>
