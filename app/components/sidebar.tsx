@@ -3,37 +3,37 @@ import ToggleSidebarButton from "./toggle-sidebar-button";
 
 const entriesLinks = [
   {
-    href: 'register-expenses.html',
+    href: '/register-expenses',
     innerText: 'Register Expenses'
   },
 ]
 
 const reportLinks = [
   {
-    href: 'month-report.html',
+    href: '/month-report',
     innerText: 'Month Report'
   },
   {
-    href: 'account-report.html',
+    href: '/account-report',
     innerText: 'Account Report'
   },
 ]
 
 const databaseLinks = [
   {
-    href: 'expense-group.html',
+    href: '/database/expense-group',
     innerText: 'Expense Group'
   },
   {
-    href: 'expense.html',
+    href: '/database/expense',
     innerText: 'Expense'
   },
   {
-    href: 'account.html',
+    href: '/database/account',
     innerText: 'Account'
   },
   {
-    href: 'filter.html',
+    href: '/database/filter',
     innerText: 'Filter'
   },
 ]
