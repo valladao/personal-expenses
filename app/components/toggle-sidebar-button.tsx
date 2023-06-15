@@ -16,7 +16,7 @@ const ToggleSidebarButton: React.FC<ToggleSidebarButtonProps> = ({text}) => {
   };
 
   return (
-    <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded h-8" onClick={toggleSidebar}>
+    <button className="bg-emerald-600 hover:bg-emerald-700 text-zinc-100 py-1 px-2 rounded h-8" onClick={toggleSidebar}>
       {text}
     </button>
   );
