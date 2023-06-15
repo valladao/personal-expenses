@@ -9,8 +9,8 @@ export default function Layout() {
         <div className="flex">
           <ToggleSidebarButton text="&gt;" />
         </div>
-        <div className="flex items-center">
-          <h1 className="text-2xl font-bold ml-4">Month Report</h1>
+        <div className="flex flex-col pl-4">
+          <h1 className="text-2xl font-bold">Month Report</h1>
           <p>This is the content for the Month Report page.</p>
         </div>
       </main>
