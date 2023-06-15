@@ -38,6 +38,21 @@ const databaseLinks = [
   },
 ]
 
+const basicSidebarLinks = [
+  {
+    listName: "Entries",
+    linkArray: entriesLinks
+  },
+  {
+    listName: "Reports",
+    linkArray: reportLinks
+  },
+  {
+    listName: "Database",
+    linkArray: databaseLinks
+  }
+]
+
 export type LinksListType = typeof databaseLinks;
 
 export default function Sidebar() {
@@ -47,13 +62,11 @@ export default function Sidebar() {
         <h1 className="text-xl font-bold mr-4 text-zinc-100">Expenses App</h1>
         <ToggleSidebarButton text="&times;" />
       </div>
-
-      <LinkList linkArray={entriesLinks} listName='Entries'></LinkList>
-
-      <LinkList linkArray={reportLinks} listName='Reports'></LinkList>
-
-      <LinkList linkArray={databaseLinks} listName='Database'></LinkList>
-
+      {
+        basicSidebarLinks.map(linkList => {
+          return <LinkList key={linkList.listName} linkArray={linkList.linkArray} listName={linkList.listName}></LinkList>
+        })
+      }
     </dialog>
   )
 }
