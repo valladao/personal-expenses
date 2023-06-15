@@ -2,7 +2,7 @@ import type {LinksListType} from "./sidebar";
 
 export default function LinkList({linkArray, listName}: {linkArray: LinksListType, listName: string}) {
   return (
-    <>
+    <div className="mt-5">
       {listName}
       <ul className="list-none p-0 ml-4">
         {linkArray.map((link, index) => (
@@ -11,6 +11,6 @@ export default function LinkList({linkArray, listName}: {linkArray: LinksListTyp
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
