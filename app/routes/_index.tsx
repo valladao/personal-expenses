@@ -10,9 +10,9 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div id="app">
-      <Layout></Layout>
+    <div className="flex flex-col pl-4 text-zinc-800">
+      <h1 className="text-2xl font-bold">Draft Index Page</h1>
+      <p>I'll change this page in future...</p>
     </div>
   );
-
 }
