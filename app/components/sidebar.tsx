@@ -1,3 +1,4 @@
+import {Link} from "@remix-run/react";
 import LinkList from "./link-list";
 import ToggleSidebarButton from "./toggle-sidebar-button";
 
@@ -59,7 +60,9 @@ export default function Sidebar() {
   return (
     <dialog id="sidebar" className="w-64 bg-zinc-800 p-4 m-0 h-full">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold mr-4 text-zinc-100">Expenses App</h1>
+        <Link to="/">
+          <h1 className="text-xl font-bold mr-4 text-zinc-100">Expenses App</h1>
+        </Link>
         <ToggleSidebarButton text="&times;" />
       </div>
       {
