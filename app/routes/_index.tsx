@@ -15,4 +15,5 @@ export default function Index() {
       <p>I'll change this page in future...</p>
     </div>
   );
+
 }
