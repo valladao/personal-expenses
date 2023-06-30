@@ -1,5 +1,5 @@
 import type {V2_MetaFunction} from "@remix-run/node";
-import Layout from "~/components/layout";
+import PageTitle from "~/components/page-title";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -10,8 +10,9 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div id="app">
-      <Layout></Layout>
+    <div className="flex flex-col pl-4 text-zinc-800">
+      <PageTitle>Draft Index Page</PageTitle>
+      <p>I'll change this page in future...</p>
     </div>
   );
 
