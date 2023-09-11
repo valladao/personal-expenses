@@ -17,7 +17,7 @@ export default function Database() {
   const pageTitle = pageTitleBuilder(lastRouteName, "Database");
 
   return (
-    <div className="flex flex-col pl-4 text-zinc-800">
+    <div className="flex flex-col w-full pl-4 text-zinc-800">
       <PageTitle>{pageTitle}</PageTitle>
       <Outlet />
     </div>
