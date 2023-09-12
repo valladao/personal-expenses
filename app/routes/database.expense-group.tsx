@@ -1,3 +1,5 @@
+import {FaCaretDown, FaCaretUp, FaPenToSquare, FaTrashCan} from "react-icons/fa6";
+
 export default function ExpenseGroup() {
   return (
     <div className="flex">
@@ -14,9 +16,18 @@ export default function ExpenseGroup() {
             <tr>
               <td className="px-6 py-4 whitespace-nowrap">Expense Group 1</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button className="text-blue-600 hover:text-blue-800">Edit</button>
-                <button className="text-red-600 hover:text-red-800">Delete</button>
-                <button className="text-gray-600 hover:text-gray-800">Change Order</button>
+                <button className="text-emerald-600 hover:text-emerald-700">
+                  <FaPenToSquare />
+                </button>
+                <button className="text-red-600 hover:text-red-800">
+                  <FaTrashCan />
+                </button>
+                <button className="text-gray-600 hover:text-gray-800">
+                  <FaCaretDown />
+                </button>
+                <button className="text-gray-600 hover:text-gray-800">
+                  <FaCaretUp />
+                </button>
               </td>
             </tr>
           </tbody>
@@ -31,7 +42,7 @@ export default function ExpenseGroup() {
             <input type="text" id="name" name="name" className="w-full px-4 py-2 border border-gray-300 rounded" />
           </div>
           <div className="flex justify-end">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Save</button>
+            <button className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">Save</button>
           </div>
         </form>
       </div>
