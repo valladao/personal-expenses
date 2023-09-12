@@ -1,4 +1,9 @@
-import {FaCaretDown, FaCaretUp, FaPenToSquare, FaTrashCan} from "react-icons/fa6";
+import {
+  FaCaretDown,
+  FaCaretUp,
+  FaPenToSquare,
+  FaTrashCan
+} from "react-icons/fa6";
 
 export default function ExpenseGroup() {
   return (
@@ -16,18 +21,28 @@ export default function ExpenseGroup() {
             <tr>
               <td className="px-6 py-4 whitespace-nowrap">Expense Group 1</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button className="text-emerald-600 hover:text-emerald-700">
-                  <FaPenToSquare />
-                </button>
-                <button className="text-red-600 hover:text-red-800">
-                  <FaTrashCan />
-                </button>
-                <button className="text-gray-600 hover:text-gray-800">
-                  <FaCaretDown />
-                </button>
-                <button className="text-gray-600 hover:text-gray-800">
-                  <FaCaretUp />
-                </button>
+                <div className="flex space-x-2">
+                  <div className="rounded-md bg-emerald-600 p-2 pb-1">
+                    <button className="text-white">
+                      <FaPenToSquare size={20} />
+                    </button>
+                  </div>
+                  <div className="rounded-md bg-red-600 p-2 pb-1">
+                    <button className="text-white">
+                      <FaTrashCan size={20} />
+                    </button>
+                  </div>
+                  <div className="rounded-md bg-gray-600 p-2 pb-1">
+                    <button className="text-white">
+                      <FaCaretDown size={20} />
+                    </button>
+                  </div>
+                  <div className="rounded-md bg-gray-600 p-2 pt-3 pb-0">
+                    <button className="text-white">
+                      <FaCaretUp size={20} />
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -47,6 +62,5 @@ export default function ExpenseGroup() {
         </form>
       </div>
     </div>
-
-  )
+  );
 }
