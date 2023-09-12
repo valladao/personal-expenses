@@ -10,7 +10,7 @@ export default function ExpenseGroup() {
     <div className="flex">
       <div className="w-1/2 p-4">
         <h2 className="text-2xl font-bold mb-4">Expense Groups</h2>
-        <table className="min-w-full bg-white border border-gray-200">
+        <table className="min-w-full bg-white border border-gray-200 border-separate rounded-md">
           <thead>
             <tr>
               <th className="px-6 py-3 text-left">Name</th>
