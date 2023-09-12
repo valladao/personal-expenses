@@ -1,6 +1,6 @@
 import {Link} from "@remix-run/react";
 import LinkList from "./link-list";
-import ToggleSidebarButton from "./toggle-sidebar-button";
+import ToggleSidebarButton from "../elements/toggle-sidebar-button";
 
 const entriesLinks = [
   {

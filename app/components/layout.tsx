@@ -1,5 +1,5 @@
-import Sidebar from "./sidebar";
-import ToggleSidebarButton from "./toggle-sidebar-button";
+import Sidebar from "./compositions/sidebar";
+import ToggleSidebarButton from "./elements/toggle-sidebar-button";
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (

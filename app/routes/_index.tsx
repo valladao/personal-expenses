@@ -1,5 +1,5 @@
 import type {V2_MetaFunction} from "@remix-run/node";
-import PageTitle from "~/components/page-title";
+import PageTitle from "~/components/elements/page-title";
 
 export const meta: V2_MetaFunction = () => {
   return [

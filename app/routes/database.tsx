@@ -1,5 +1,5 @@
 import {Outlet, useMatches} from "@remix-run/react";
-import PageTitle from "~/components/page-title";
+import PageTitle from "~/components/elements/page-title";
 
 function pageTitleBuilder(routeName: string | undefined, baseName: string) {
   if (!routeName) {
