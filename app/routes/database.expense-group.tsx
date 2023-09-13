@@ -1,6 +1,14 @@
-import type {ActionArgs} from "@remix-run/node";
+import {json, type ActionArgs} from "@remix-run/node";
+import {useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup} from "~/models/expense-group.server";
+import {createExpenseGroup, getExpenseGroupItems} from "~/models/expense-group.server";
+
+export async function loader() {
+  const expenseGroupItems = await getExpenseGroupItems();
+  return json({
+    expenseGroupItems
+  })
+}
 
 export async function action({request}: ActionArgs) {
   const formData = await request.formData();
@@ -15,6 +23,8 @@ export async function action({request}: ActionArgs) {
 }
 
 export default function ExpenseGroup() {
+  const expenseGroupItems = useLoaderData().expenseGroupItems;
+  console.log(expenseGroupItems);
   return (
     <div className="flex">
       <div className="w-1/2 p-4">
@@ -27,8 +37,7 @@ export default function ExpenseGroup() {
             </tr>
           </thead>
           <tbody>
-            <TableEntry text="Expense Group 1" />
-            <TableEntry text="Expense Group 2" />
+            {expenseGroupItems.map((expenseGroupItem: {name: string; id: number}) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
           </tbody>
         </table>
       </div>
