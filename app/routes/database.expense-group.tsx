@@ -3,6 +3,7 @@ import {useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
 import {createExpenseGroup, getExpenseGroupItems} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
+import invariant from "tiny-invariant";
 
 export async function loader() {
   const expenseGroupItems = await getExpenseGroupItems();
@@ -15,8 +16,11 @@ export async function action({request}: ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name");
   const order = 0;
-  const hidden = formData.get("hidden") ? formData.get("hidden") : false;
+  const hidden = formData.get("hidden") ? true : false;
   const deleted = false;
+
+  invariant(name, "Expense Group name not defined!");
+  invariant(typeof (name) === "string", "Expense Group name need to be a text!");
 
   await createExpenseGroup({name, order, hidden, deleted});
 
