@@ -2,6 +2,7 @@ import {json, type ActionArgs} from "@remix-run/node";
 import {useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
 import {createExpenseGroup, getExpenseGroupItems} from "~/models/expense-group.server";
+import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 
 export async function loader() {
   const expenseGroupItems = await getExpenseGroupItems();
@@ -37,7 +38,7 @@ export default function ExpenseGroup() {
             </tr>
           </thead>
           <tbody>
-            {expenseGroupItems.map((expenseGroupItem: {name: string; id: number}) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
+            {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
           </tbody>
         </table>
       </div>
@@ -52,6 +53,7 @@ export default function ExpenseGroup() {
               id="name"
               name="name"
               className="w-full px-4 py-2 border border-gray-300 rounded"
+              required
             />
           </div>
           <div className="mb-4">
