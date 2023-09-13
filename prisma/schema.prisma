@@ -9,3 +9,13 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model ExpenseGroup {
+  id          Int         @id @default(autoincrement())
+  name        String
+  order       Int
+  hidden      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deleted     Boolean     @default(false)
+}
