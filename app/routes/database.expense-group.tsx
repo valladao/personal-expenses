@@ -1,5 +1,5 @@
 import {json, type ActionArgs} from "@remix-run/node";
-import {useLoaderData} from "@remix-run/react";
+import {Form, useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
 import {createExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
@@ -33,25 +33,26 @@ export default function ExpenseGroup() {
   const expenseGroupItems = useLoaderData().expenseGroupItems;
   console.log(expenseGroupItems);
   return (
-    <div className="flex">
-      <div className="w-1/2 p-4">
-        <h2 className="text-2xl font-bold mb-4">Expense Groups</h2>
-        <table className="min-w-full bg-white border border-gray-200 border-separate rounded-md">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 text-left">Name</th>
-              <th className="px-6 py-3 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
-          </tbody>
-        </table>
-      </div>
+    <Form method="post" reloadDocument>
+      <div className="flex">
+        <div className="w-1/2 p-4">
+          <h2 className="text-2xl font-bold mb-4">Expense Groups</h2>
+          <table className="min-w-full bg-white border border-gray-200 border-separate rounded-md">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 text-left">Name</th>
+                <th className="px-6 py-3 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
+            </tbody>
+          </table>
+        </div>
 
-      <div className="w-1/2 p-4">
-        <h2 className="text-2xl font-bold mb-4">Create New Expense Group</h2>
-        <form method="post">
+        <div className="w-1/2 p-4">
+          <h2 className="text-2xl font-bold mb-4">Create New Expense Group</h2>
+
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700">Name:</label>
             <input
@@ -71,8 +72,9 @@ export default function ExpenseGroup() {
           <div className="flex justify-end">
             <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">Create</button>
           </div>
-        </form>
+
+        </div>
       </div>
-    </div>
+    </Form >
   );
 }
