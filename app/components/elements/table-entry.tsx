@@ -17,7 +17,7 @@ export default function TableEntry({text}: {text: string}) {
             </button>
           </div>
           <div className="rounded-md bg-red-600 p-2 pb-1 hover:bg-red-700">
-            <button className="text-white">
+            <button className="text-white" name="intent" value="delete-1">
               <FaTrashCan size={20} />
             </button>
           </div>
