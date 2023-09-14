@@ -8,5 +8,14 @@ export async function createExpenseGroup(
 }
 
 export async function getExpenseGroupItems() {
-  return prisma.expenseGroup.findMany({})
+  return prisma.expenseGroup.findMany({
+    orderBy: { order: "asc" }
+  })
+}
+
+// Retrieve the highest order item
+export async function getExpenseGroupHighOrder() {
+  return prisma.expenseGroup.findFirst({
+    orderBy: { order: "desc" }
+  })
 }

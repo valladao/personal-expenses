@@ -1,7 +1,7 @@
 import {json, type ActionArgs} from "@remix-run/node";
 import {useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup, getExpenseGroupItems} from "~/models/expense-group.server";
+import {createExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 import invariant from "tiny-invariant";
 
@@ -15,9 +15,11 @@ export async function loader() {
 export async function action({request}: ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name");
-  const order = 0;
   const hidden = formData.get("hidden") ? true : false;
   const deleted = false;
+
+  const highOrderItem = await getExpenseGroupHighOrder();
+  const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
 
   invariant(name, "Expense Group name not defined!");
   invariant(typeof (name) === "string", "Expense Group name need to be a text!");
