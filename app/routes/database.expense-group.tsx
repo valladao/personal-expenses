@@ -1,5 +1,5 @@
 import {json, type ActionArgs} from "@remix-run/node";
-import {Form, useLoaderData} from "@remix-run/react";
+import {Form, Outlet, useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
 import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems, updateExpenseGroupOrder} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
@@ -114,27 +114,7 @@ export default function ExpenseGroup() {
         </div>
 
         <div className="w-1/2 p-4">
-          <h2 className="text-2xl font-bold mb-4">Create New Expense Group</h2>
-
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="w-full px-4 py-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center space-x-2">
-              <input type="checkbox" id="hidden" name="hidden" className="form-checkbox h-5 w-5 text-emerald-600" />
-              <span className="text-gray-700">Hide Expense Group</span>
-            </label>
-          </div>
-          <div className="flex justify-end">
-            <button type="submit" name="intent" value="create" className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">Create</button>
-          </div>
-
+          <Outlet></Outlet>
         </div>
       </div>
     </Form >
