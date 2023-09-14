@@ -1,7 +1,7 @@
 import {json, type ActionArgs} from "@remix-run/node";
 import {Form, useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems, getExpenseGroupItem} from "~/models/expense-group.server";
+import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems, updateExpenseGroupOrder} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 import invariant from "tiny-invariant";
 
@@ -13,25 +13,26 @@ async function createExpenseGroupButton({name, hidden}: {name: string, hidden: b
 }
 
 async function changeExpenseGroupOrder(id: number, up = false) {
-  const selectedItem = await getExpenseGroupItem(id)
-  console.log("Item: ", id, " - Order: ", selectedItem?.order)
   const expenseGroupItems = await getExpenseGroupItems();
   const idOrderArray = expenseGroupItems.map((item) => {
     return {id: item.id, order: item.order}
   })
   const selectedIndex = idOrderArray.findIndex(item => item.id === id);
-  console.log('Selected item: ', idOrderArray[selectedIndex]);
 
   if (!up) {
     if (idOrderArray[selectedIndex + 1]) {
-      console.log('Next item: ', idOrderArray[selectedIndex + 1]);
+      await updateExpenseGroupOrder(id, idOrderArray[selectedIndex + 1].order)
+      await updateExpenseGroupOrder(idOrderArray[selectedIndex + 1].id, idOrderArray[selectedIndex].order)
     } else {
+      // This needs to be improved with error treatment
       console.log('Error: This is the last item!');
     }
   } else {
     if (idOrderArray[selectedIndex - 1]) {
-      console.log('Previous item: ', idOrderArray[selectedIndex - 1]);
+      await updateExpenseGroupOrder(id, idOrderArray[selectedIndex - 1].order)
+      await updateExpenseGroupOrder(idOrderArray[selectedIndex - 1].id, idOrderArray[selectedIndex].order)
     } else {
+      // This needs to be improved with error treatment
       console.log('Error: This is the first item!');
     }
   }
@@ -75,11 +76,11 @@ export async function action({request}: ActionArgs) {
         break;
 
       case "down":
-        changeExpenseGroupOrder(idNumber);
+        await changeExpenseGroupOrder(idNumber);
         break;
 
       case "up":
-        changeExpenseGroupOrder(idNumber, true);
+        await changeExpenseGroupOrder(idNumber, true);
         break;
 
       default:

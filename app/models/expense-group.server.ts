@@ -28,9 +28,10 @@ export async function getExpenseGroupHighOrder() {
   })
 }
 
-// Retrive the item by id
-export async function getExpenseGroupItem(id: number) {
-  return prisma.expenseGroup.findUnique({
-    where: { id: id }
+// Update the item order
+export async function updateExpenseGroupOrder(id: number, newOrder: number) {
+  return prisma.expenseGroup.update({
+    where: { id },
+    data: { order: newOrder }
   })
 }
