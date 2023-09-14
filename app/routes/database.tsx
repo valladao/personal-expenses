@@ -1,5 +1,5 @@
 import {Outlet, useMatches} from "@remix-run/react";
-import PageTitle from "~/components/page-title";
+import PageTitle from "~/components/elements/page-title";
 
 function pageTitleBuilder(routeName: string | undefined, baseName: string) {
   if (!routeName) {
@@ -17,7 +17,7 @@ export default function Database() {
   const pageTitle = pageTitleBuilder(lastRouteName, "Database");
 
   return (
-    <div className="flex flex-col pl-4 text-zinc-800">
+    <div className="flex flex-col w-full pl-4 text-zinc-800">
       <PageTitle>{pageTitle}</PageTitle>
       <Outlet />
     </div>
