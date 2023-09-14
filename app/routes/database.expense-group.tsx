@@ -28,6 +28,13 @@ export async function action({request}: ActionArgs) {
     const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
 
     await createExpenseGroup({name, order, hidden, deleted});
+  } else {
+    const intentString = intent?.toString();
+    const isDelete = intentString?.includes("delete");
+    if (isDelete) {
+      const idString = intentString?.match(/\d+/);
+      console.log(parseInt(idString[0], 10))
+    }
   }
 
   return null;
@@ -35,7 +42,6 @@ export async function action({request}: ActionArgs) {
 
 export default function ExpenseGroup() {
   const expenseGroupItems = useLoaderData().expenseGroupItems;
-  console.log(expenseGroupItems);
   return (
     <Form method="post" reloadDocument>
       <div className="flex">
@@ -64,7 +70,6 @@ export default function ExpenseGroup() {
               id="name"
               name="name"
               className="w-full px-4 py-2 border border-gray-300 rounded"
-              required
             />
           </div>
           <div className="mb-4">
