@@ -1,9 +1,42 @@
 import {json, type ActionArgs} from "@remix-run/node";
 import {Form, useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
+import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems, getExpenseGroupItem} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 import invariant from "tiny-invariant";
+
+async function createExpenseGroupButton({name, hidden}: {name: string, hidden: boolean}) {
+  const highOrderItem = await getExpenseGroupHighOrder();
+  const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
+
+  await createExpenseGroup({name, order, hidden, deleted: false});
+}
+
+async function changeExpenseGroupOrder(id: number, up = false) {
+  const selectedItem = await getExpenseGroupItem(id)
+  console.log("Item: ", id, " - Order: ", selectedItem?.order)
+  const expenseGroupItems = await getExpenseGroupItems();
+  const idOrderArray = expenseGroupItems.map((item) => {
+    return {id: item.id, order: item.order}
+  })
+  const selectedIndex = idOrderArray.findIndex(item => item.id === id);
+  console.log('Selected item: ', idOrderArray[selectedIndex]);
+
+  if (!up) {
+    if (idOrderArray[selectedIndex + 1]) {
+      console.log('Next item: ', idOrderArray[selectedIndex + 1]);
+    } else {
+      console.log('Error: This is the last item!');
+    }
+  } else {
+    if (idOrderArray[selectedIndex - 1]) {
+      console.log('Previous item: ', idOrderArray[selectedIndex - 1]);
+    } else {
+      console.log('Error: This is the first item!');
+    }
+  }
+
+}
 
 export async function loader() {
   const expenseGroupItems = await getExpenseGroupItems();
@@ -15,27 +48,44 @@ export async function loader() {
 export async function action({request}: ActionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent");
+
   if (intent === "create") {
     const name = formData.get("name");
 
     invariant(name, "Expense Group name not defined!");
     invariant(typeof (name) === "string", "Expense Group name need to be a text!");
 
-    const hidden = formData.get("hidden") ? true : false;
-    const deleted = false;
+    await createExpenseGroupButton({
+      name: name,
+      hidden: formData.get("hidden") ? true : false
+    })
 
-    const highOrderItem = await getExpenseGroupHighOrder();
-    const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
-
-    await createExpenseGroup({name, order, hidden, deleted});
   } else {
     const intentString = intent?.toString();
-    const isDelete = intentString?.includes("delete");
-    if (isDelete) {
-      const idString = intentString?.match(/\d+/);
-      invariant(idString, "To delete item id cannot be null!")
-      await deleteExpenseGroup(parseInt(idString[0], 10))
+    const [action, idString] = intentString?.split("-") || [];
+    const idNumber = parseInt(idString, 10);
+
+    switch (action) {
+      case "update":
+        console.log('Update: ', idNumber);
+        break;
+
+      case "delete":
+        await deleteExpenseGroup(idNumber);
+        break;
+
+      case "down":
+        changeExpenseGroupOrder(idNumber);
+        break;
+
+      case "up":
+        changeExpenseGroupOrder(idNumber, true);
+        break;
+
+      default:
+        break;
     }
+
   }
 
   return null;
