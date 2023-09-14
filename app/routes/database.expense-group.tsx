@@ -14,17 +14,21 @@ export async function loader() {
 
 export async function action({request}: ActionArgs) {
   const formData = await request.formData();
-  const name = formData.get("name");
-  const hidden = formData.get("hidden") ? true : false;
-  const deleted = false;
+  const intent = formData.get("intent");
+  if (intent === "create") {
+    const name = formData.get("name");
 
-  const highOrderItem = await getExpenseGroupHighOrder();
-  const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
+    invariant(name, "Expense Group name not defined!");
+    invariant(typeof (name) === "string", "Expense Group name need to be a text!");
 
-  invariant(name, "Expense Group name not defined!");
-  invariant(typeof (name) === "string", "Expense Group name need to be a text!");
+    const hidden = formData.get("hidden") ? true : false;
+    const deleted = false;
 
-  await createExpenseGroup({name, order, hidden, deleted});
+    const highOrderItem = await getExpenseGroupHighOrder();
+    const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
+
+    await createExpenseGroup({name, order, hidden, deleted});
+  }
 
   return null;
 }
@@ -70,7 +74,7 @@ export default function ExpenseGroup() {
             </label>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">Create</button>
+            <button type="submit" name="intent" value="create" className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">Create</button>
           </div>
 
         </div>
