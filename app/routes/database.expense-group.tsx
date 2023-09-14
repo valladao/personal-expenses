@@ -33,6 +33,7 @@ export async function action({request}: ActionArgs) {
     const isDelete = intentString?.includes("delete");
     if (isDelete) {
       const idString = intentString?.match(/\d+/);
+      invariant(idString, "To delete item id cannot be null!")
       console.log(parseInt(idString[0], 10))
     }
   }
@@ -55,7 +56,7 @@ export default function ExpenseGroup() {
               </tr>
             </thead>
             <tbody>
-              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} text={expenseGroupItem.name} />)}
+              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} entry={expenseGroupItem} />)}
             </tbody>
           </table>
         </div>

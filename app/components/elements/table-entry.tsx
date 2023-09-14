@@ -5,10 +5,10 @@ import {
   FaTrashCan
 } from "react-icons/fa6";
 
-export default function TableEntry({text}: {text: string}) {
+export default function TableEntry({entry}: {entry: any}) {
   return (
     <tr>
-      <td className="px-6 py-4 whitespace-nowrap">{text}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{entry.name}</td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex space-x-2">
           <div className="rounded-md bg-emerald-600 p-2 pb-1 hover:bg-emerald-700">
@@ -17,7 +17,7 @@ export default function TableEntry({text}: {text: string}) {
             </button>
           </div>
           <div className="rounded-md bg-red-600 p-2 pb-1 hover:bg-red-700">
-            <button className="text-white" name="intent" value="delete-1">
+            <button className="text-white" name="intent" value={'delete-' + entry.id}>
               <FaTrashCan size={20} />
             </button>
           </div>
