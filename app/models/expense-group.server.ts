@@ -9,7 +9,15 @@ export async function createExpenseGroup(
 
 export async function getExpenseGroupItems() {
   return prisma.expenseGroup.findMany({
+    where: { deleted: false },
     orderBy: { order: "asc" }
+  })
+}
+
+export async function deleteExpenseGroup(id: number) {
+  return prisma.expenseGroup.update({
+    where: { id },
+    data: { deleted: true }
   })
 }
 

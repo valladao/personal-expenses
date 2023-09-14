@@ -1,7 +1,7 @@
 import {json, type ActionArgs} from "@remix-run/node";
 import {Form, useLoaderData} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
+import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 import invariant from "tiny-invariant";
 
@@ -34,7 +34,7 @@ export async function action({request}: ActionArgs) {
     if (isDelete) {
       const idString = intentString?.match(/\d+/);
       invariant(idString, "To delete item id cannot be null!")
-      console.log(parseInt(idString[0], 10))
+      await deleteExpenseGroup(parseInt(idString[0], 10))
     }
   }
 
