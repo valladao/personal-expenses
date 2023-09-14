@@ -5,10 +5,13 @@ import {
   FaTrashCan
 } from "react-icons/fa6";
 
-export default function TableEntry({entry}: {entry: any}) {
+export default function TableEntry({entry, col2}: {entry: {name: string, id: number}, col2: string}) {
+  // Table is ready to add lines to the second column.
+  // It is necessary to use \n inside the string.
   return (
     <tr>
-      <td className="px-6 py-4 whitespace-nowrap">{entry.name}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-lg">{entry.name}</td>
+      <td className="px-6 py-4 text-sm whitespace-pre-line">{col2}</td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex space-x-2">
           <div className="rounded-md bg-emerald-600 p-2 pb-1 hover:bg-emerald-700">

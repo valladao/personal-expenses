@@ -103,11 +103,12 @@ export default function ExpenseGroup() {
             <thead>
               <tr>
                 <th className="px-6 py-3 text-left">Name</th>
+                <th className="px-6 py-3 text-left"></th>
                 <th className="px-6 py-3 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} entry={expenseGroupItem} />)}
+              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} entry={expenseGroupItem} col2={"Hidden: " + expenseGroupItem.hidden} />)}
             </tbody>
           </table>
         </div>
