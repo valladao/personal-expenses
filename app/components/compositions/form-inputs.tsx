@@ -1,6 +1,6 @@
 import {Form} from "@remix-run/react";
 
-export default function FormInputs({formTitle, submitTitle}: {formTitle: string, submitTitle: string}) {
+export default function FormInputs({formTitle, submitTitle, submitIntent}: {formTitle: string, submitTitle: string, submitIntent: string}) {
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
@@ -23,7 +23,7 @@ export default function FormInputs({formTitle, submitTitle}: {formTitle: string,
           </label>
         </div>
         <div className="flex justify-end">
-          <button type="submit" name="intent" value="create" className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">{submitTitle}</button>
+          <button type="submit" name="intent" value={submitIntent} className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">{submitTitle}</button>
         </div>
 
       </Form>

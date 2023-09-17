@@ -76,6 +76,7 @@ export default function ExpenseGroupEdit() {
         <FormInputs
           formTitle="Create New Expense Group"
           submitTitle="Create"
+          submitIntent="create"
         ></FormInputs>
       </div>
     </>
