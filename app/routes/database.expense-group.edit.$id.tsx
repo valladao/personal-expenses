@@ -1,10 +1,13 @@
-import type {ActionArgs, LoaderArgs} from "@remix-run/node";
-import {useLoaderData} from "@remix-run/react";
+import {useLoaderData, useOutletContext} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
 import {deleteExpenseGroup} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
+import TableEntry from "~/components/elements/table-entry";
+
+import type {ActionArgs, LoaderArgs} from "@remix-run/node";
+import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 
 export function loader({params}: LoaderArgs) {
   const id = params.id;
@@ -15,16 +18,13 @@ export async function action({request}: ActionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent");
 
-  if (intent === "create") {
+  if (intent === "edit") {
     const name = formData.get("name");
 
     invariant(name, "Expense Group name not defined!");
     invariant(typeof (name) === "string", "Expense Group name need to be a text!");
 
-    await createExpenseGroupButton({
-      name: name,
-      hidden: formData.get("hidden") ? true : false
-    })
+    console.log("Manoel: Edit clicked!")
 
   } else {
     const intentString = intent?.toString();
@@ -59,6 +59,7 @@ export async function action({request}: ActionArgs) {
 
 export default function ExpenseGroupEdit() {
   const id = useLoaderData();
+  const [expenseGroupItems]: any = useOutletContext();
   return (
 
     <>
@@ -71,7 +72,8 @@ export default function ExpenseGroupEdit() {
       <div className="w-1/2 p-4">
         <FormInputs
           formTitle={"Edit Expense Group: ID " + id}
-          submitTitle={"Save"}
+          submitTitle="Save"
+          submitIntent="edit"
         ></FormInputs>
       </div>
     </>
