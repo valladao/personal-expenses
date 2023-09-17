@@ -1,18 +1,19 @@
-import {json, type ActionArgs} from "@remix-run/node";
-import {Form, Outlet, useLoaderData} from "@remix-run/react";
-import TableEntry from "~/components/elements/table-entry";
-import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems, updateExpenseGroupOrder} from "~/models/expense-group.server";
-import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
-import invariant from "tiny-invariant";
+import {Outlet} from "@remix-run/react";
+import {getExpenseGroupItems, updateExpenseGroupOrder} from "~/models/expense-group.server";
 
-async function createExpenseGroupButton({name, hidden}: {name: string, hidden: boolean}) {
-  const highOrderItem = await getExpenseGroupHighOrder();
-  const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
-
-  await createExpenseGroup({name, order, hidden, deleted: false});
+export default function ExpenseGroup() {
+  return (
+    <div className="flex">
+      <Outlet></Outlet>
+    </div>
+  );
 }
 
-async function changeExpenseGroupOrder(id: number, up = false) {
+/* Shared JavaScript functions
+   To be used by the child functions
+ */
+
+export async function changeExpenseGroupOrder(id: number, up = false) {
   const expenseGroupItems = await getExpenseGroupItems();
   const idOrderArray = expenseGroupItems.map((item) => {
     return {id: item.id, order: item.order}
@@ -37,86 +38,4 @@ async function changeExpenseGroupOrder(id: number, up = false) {
     }
   }
 
-}
-
-export async function loader() {
-  const expenseGroupItems = await getExpenseGroupItems();
-  return json({
-    expenseGroupItems
-  })
-}
-
-export async function action({request}: ActionArgs) {
-  const formData = await request.formData();
-  const intent = formData.get("intent");
-
-  if (intent === "create") {
-    const name = formData.get("name");
-
-    invariant(name, "Expense Group name not defined!");
-    invariant(typeof (name) === "string", "Expense Group name need to be a text!");
-
-    await createExpenseGroupButton({
-      name: name,
-      hidden: formData.get("hidden") ? true : false
-    })
-
-  } else {
-    const intentString = intent?.toString();
-    const [action, idString] = intentString?.split("-") || [];
-    const idNumber = parseInt(idString, 10);
-
-    switch (action) {
-      case "update":
-        console.log('Update: ', idNumber);
-        break;
-
-      case "delete":
-        await deleteExpenseGroup(idNumber);
-        break;
-
-      case "down":
-        await changeExpenseGroupOrder(idNumber);
-        break;
-
-      case "up":
-        await changeExpenseGroupOrder(idNumber, true);
-        break;
-
-      default:
-        break;
-    }
-
-  }
-
-  return null;
-}
-
-export default function ExpenseGroup() {
-  const expenseGroupItems = useLoaderData().expenseGroupItems;
-  return (
-    <Form method="post" reloadDocument>
-      <div className="flex">
-        <div className="w-1/2 p-4">
-          <h2 className="text-2xl font-bold mb-4">Expense Groups</h2>
-          <table className="min-w-full bg-white border border-gray-200 border-separate rounded-md">
-            <thead>
-              <tr>
-                <th className="px-6 py-3 text-left">Name</th>
-                <th className="px-6 py-3 text-left"></th>
-                <th className="px-6 py-3 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expenseGroupItems.map((expenseGroupItem: ExpenseGroupType) => <TableEntry key={expenseGroupItem.id} entry={expenseGroupItem} col2={"Hidden: " + expenseGroupItem.hidden} />)}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="w-1/2 p-4">
-          <Outlet></Outlet>
-        </div>
-      </div>
-    </Form >
-  );
 }
