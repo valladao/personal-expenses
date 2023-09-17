@@ -14,6 +14,12 @@ export async function getExpenseGroupItems() {
   })
 }
 
+export async function dbGetExpenseGroupItem(id: number) {
+  return prisma.expenseGroup.findUnique({
+    where: { id: Number(id) }
+  })
+}
+
 export async function deleteExpenseGroup(id: number) {
   return prisma.expenseGroup.update({
     where: { id },

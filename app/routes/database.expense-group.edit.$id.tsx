@@ -2,16 +2,18 @@ import {useLoaderData, useOutletContext} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
-import {deleteExpenseGroup} from "~/models/expense-group.server";
+import {dbGetExpenseGroupItem, deleteExpenseGroup} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
 import TableEntry from "~/components/elements/table-entry";
 
-import type {ActionArgs, LoaderArgs} from "@remix-run/node";
+import {json, type ActionArgs, type LoaderArgs} from "@remix-run/node";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 
-export function loader({params}: LoaderArgs) {
-  const id = params.id;
-  return id;
+export async function loader({params}: LoaderArgs) {
+  invariant(params.id, "Expense group ID missing!")
+  const id = Number(params.id);
+  const selectedItem = await dbGetExpenseGroupItem(id);
+  return json({id, selectedItem});
 }
 
 export async function action({request}: ActionArgs) {
@@ -54,7 +56,8 @@ export async function action({request}: ActionArgs) {
 }
 
 export default function ExpenseGroupEdit() {
-  const id = useLoaderData();
+  const id = useLoaderData().id;
+  const selectedItem = useLoaderData().selectedItem;
   const [expenseGroupItems]: [ExpenseGroupType[]] = useOutletContext();
   return (
     <>
@@ -70,6 +73,7 @@ export default function ExpenseGroupEdit() {
           submitTitle="Save"
           submitIntent="edit"
           cancel={true}
+          selectedItem={selectedItem}
         ></FormInputs>
       </div>
     </>

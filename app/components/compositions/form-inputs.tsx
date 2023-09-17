@@ -1,6 +1,6 @@
 import {Form, Link} from "@remix-run/react";
 
-export default function FormInputs({formTitle, submitTitle, submitIntent, cancel = false}: {formTitle: string, submitTitle: string, submitIntent: string, cancel?: boolean}) {
+export default function FormInputs({formTitle, submitTitle, submitIntent, cancel = false, selectedItem = null}: {formTitle: string, submitTitle: string, submitIntent: string, cancel?: boolean, selectedItem?: {name: string, hidden: boolean, id: number} | null}) {
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
@@ -13,12 +13,14 @@ export default function FormInputs({formTitle, submitTitle, submitIntent, cancel
             type="text"
             id="name"
             name="name"
+            defaultValue={selectedItem?.name}
+            key={selectedItem?.id ?? "new"}
             className="w-full px-4 py-2 border border-gray-300 rounded"
           />
         </div>
         <div className="mb-4">
           <label className="flex items-center space-x-2">
-            <input type="checkbox" id="hidden" name="hidden" className="form-checkbox h-5 w-5 text-emerald-600" />
+            <input type="checkbox" id="hidden" name="hidden" className="form-checkbox h-5 w-5 text-emerald-600" defaultChecked={selectedItem?.hidden} key={selectedItem?.id ?? "new"} />
             <span className="text-gray-700">Hide Expense Group</span>
           </label>
         </div>
