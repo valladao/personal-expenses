@@ -1,10 +1,9 @@
-import {json} from "@remix-run/node";
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
-import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder, getExpenseGroupItems} from "~/models/expense-group.server";
+import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
-import {useLoaderData} from "@remix-run/react";
+import {useOutletContext} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
 
 import type {ActionArgs} from "@remix-run/node";
@@ -15,13 +14,6 @@ async function createExpenseGroupButton({name, hidden}: {name: string, hidden: b
   const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
 
   await createExpenseGroup({name, order, hidden, deleted: false});
-}
-
-export async function loader() {
-  const expenseGroupItems = await getExpenseGroupItems();
-  return json({
-    expenseGroupItems
-  })
 }
 
 export async function action({request}: ActionArgs) {
@@ -71,7 +63,7 @@ export async function action({request}: ActionArgs) {
 }
 
 export default function ExpenseGroupEdit() {
-  const expenseGroupItems = useLoaderData().expenseGroupItems;
+  const [expenseGroupItems]: any = useOutletContext();
   return (
     <>
       <div className="w-1/2 p-4">

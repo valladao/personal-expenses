@@ -1,10 +1,19 @@
-import {Outlet} from "@remix-run/react";
+import {json} from "@remix-run/node";
+import {Outlet, useLoaderData} from "@remix-run/react";
 import {getExpenseGroupItems, updateExpenseGroupOrder} from "~/models/expense-group.server";
 
+export async function loader() {
+  const expenseGroupItems = await getExpenseGroupItems();
+  return json({
+    expenseGroupItems
+  })
+}
+
 export default function ExpenseGroup() {
+  const expenseGroupItems = useLoaderData().expenseGroupItems;
   return (
     <div className="flex">
-      <Outlet></Outlet>
+      <Outlet context={[expenseGroupItems]}></Outlet>
     </div>
   );
 }
