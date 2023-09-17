@@ -59,7 +59,7 @@ export async function action({request}: ActionArgs) {
 
 export default function ExpenseGroupEdit() {
   const id = useLoaderData();
-  const [expenseGroupItems]: any = useOutletContext();
+  const [expenseGroupItems]: [ExpenseGroupType[]] = useOutletContext();
   return (
 
     <>

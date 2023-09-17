@@ -63,7 +63,7 @@ export async function action({request}: ActionArgs) {
 }
 
 export default function ExpenseGroupEdit() {
-  const [expenseGroupItems]: any = useOutletContext();
+  const [expenseGroupItems]: [ExpenseGroupType[]] = useOutletContext();
   return (
     <>
       <div className="w-1/2 p-4">
