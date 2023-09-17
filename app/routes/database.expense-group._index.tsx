@@ -37,10 +37,6 @@ export async function action({request}: ActionArgs) {
     const idNumber = parseInt(idString, 10);
 
     switch (action) {
-      case "update":
-        console.log('Update: ', idNumber);
-        break;
-
       case "delete":
         await deleteExpenseGroup(idNumber);
         break;

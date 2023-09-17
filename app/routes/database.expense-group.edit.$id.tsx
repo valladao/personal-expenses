@@ -32,10 +32,6 @@ export async function action({request}: ActionArgs) {
     const idNumber = parseInt(idString, 10);
 
     switch (action) {
-      case "update":
-        console.log('Update: ', idNumber);
-        break;
-
       case "delete":
         await deleteExpenseGroup(idNumber);
         break;
@@ -61,7 +57,6 @@ export default function ExpenseGroupEdit() {
   const id = useLoaderData();
   const [expenseGroupItems]: [ExpenseGroupType[]] = useOutletContext();
   return (
-
     <>
       <div className="w-1/2 p-4">
         <GenericTable>
@@ -74,6 +69,7 @@ export default function ExpenseGroupEdit() {
           formTitle={"Edit Expense Group: ID " + id}
           submitTitle="Save"
           submitIntent="edit"
+          cancel={true}
         ></FormInputs>
       </div>
     </>

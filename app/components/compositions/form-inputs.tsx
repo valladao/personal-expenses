@@ -1,6 +1,6 @@
-import {Form} from "@remix-run/react";
+import {Form, Link} from "@remix-run/react";
 
-export default function FormInputs({formTitle, submitTitle, submitIntent}: {formTitle: string, submitTitle: string, submitIntent: string}) {
+export default function FormInputs({formTitle, submitTitle, submitIntent, cancel = false}: {formTitle: string, submitTitle: string, submitIntent: string, cancel?: boolean}) {
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
@@ -23,6 +23,11 @@ export default function FormInputs({formTitle, submitTitle, submitIntent}: {form
           </label>
         </div>
         <div className="flex justify-end">
+          {cancel ? (
+            <Link to="/database/expense-group">
+              <button className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mr-3">Cancel</button>
+            </Link>
+          ) : null}
           <button type="submit" name="intent" value={submitIntent} className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded">{submitTitle}</button>
         </div>
 

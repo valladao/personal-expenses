@@ -1,3 +1,4 @@
+import {Link} from "@remix-run/react";
 import {
   FaCaretDown,
   FaCaretUp,
@@ -15,9 +16,11 @@ export default function TableEntry({entry, col2}: {entry: {name: string, id: num
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex space-x-2">
           <div className="rounded-md bg-emerald-600 p-2 pb-1 hover:bg-emerald-700">
-            <button className="text-white" name="intent" value={'update-' + entry.id}>
-              <FaPenToSquare size={20} />
-            </button>
+            <Link to={"/database/expense-group/edit/" + entry.id}>
+              <button className="text-white">
+                <FaPenToSquare size={20} />
+              </button>
+            </Link>
           </div>
           <div className="rounded-md bg-red-600 p-2 pb-1 hover:bg-red-700">
             <button className="text-white" name="intent" value={'delete-' + entry.id}>
