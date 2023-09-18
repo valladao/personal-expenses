@@ -2,11 +2,11 @@ import {useLoaderData, useOutletContext} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
-import {dbGetExpenseGroupItem, deleteExpenseGroup} from "~/models/expense-group.server";
+import {dbGetExpenseGroupItem, dbUpdateExpenseGroupItem, deleteExpenseGroup} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
 import TableEntry from "~/components/elements/table-entry";
 
-import {json, type ActionArgs, type LoaderArgs} from "@remix-run/node";
+import {json, type ActionArgs, type LoaderArgs, redirect} from "@remix-run/node";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 
 export async function loader({params}: LoaderArgs) {
@@ -16,7 +16,7 @@ export async function loader({params}: LoaderArgs) {
   return json({id, selectedItem});
 }
 
-export async function action({request}: ActionArgs) {
+export async function action({request, params}: ActionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent");
 
@@ -24,9 +24,16 @@ export async function action({request}: ActionArgs) {
     const name = formData.get("name");
 
     invariant(name, "Expense Group name not defined!");
+    invariant(params.id, "Expense group ID missing!")
     invariant(typeof (name) === "string", "Expense Group name need to be a text!");
 
-    console.log("Manoel: Edit clicked!")
+    await dbUpdateExpenseGroupItem({
+      id: Number(params.id),
+      name: name,
+      hidden: formData.get("hidden") ? true : false
+    })
+
+    return redirect("/database/expense-group")
 
   } else {
     const intentString = intent?.toString();
@@ -45,14 +52,11 @@ export async function action({request}: ActionArgs) {
       case "up":
         await changeExpenseGroupOrder(idNumber, true);
         break;
-
-      default:
-        break;
     }
 
+    return null;
   }
 
-  return null;
 }
 
 export default function ExpenseGroupEdit() {

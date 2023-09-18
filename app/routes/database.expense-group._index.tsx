@@ -48,9 +48,6 @@ export async function action({request}: ActionArgs) {
       case "up":
         await changeExpenseGroupOrder(idNumber, true);
         break;
-
-      default:
-        break;
     }
 
   }

@@ -20,6 +20,15 @@ export async function dbGetExpenseGroupItem(id: number) {
   })
 }
 
+export async function dbUpdateExpenseGroupItem(
+  newData: Pick<ExpenseGroup, "id" | "name" | "hidden">
+) {
+  return prisma.expenseGroup.update({
+    where: { id: newData.id },
+    data: newData
+  })
+}
+
 export async function deleteExpenseGroup(id: number) {
   return prisma.expenseGroup.update({
     where: { id },
