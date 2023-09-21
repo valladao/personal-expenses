@@ -1,7 +1,7 @@
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
-import {createExpenseGroup, deleteExpenseGroup, getExpenseGroupHighOrder} from "~/models/expense-group.server";
+import {dbCreateExpenseGroup, dbDeleteExpenseGroup, dbGetExpenseGroupHighOrder} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
 import {useOutletContext} from "@remix-run/react";
 import TableEntry from "~/components/elements/table-entry";
@@ -10,10 +10,10 @@ import type {ActionArgs} from "@remix-run/node";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
 
 async function createExpenseGroupButton({name, hidden}: {name: string, hidden: boolean}) {
-  const highOrderItem = await getExpenseGroupHighOrder();
+  const highOrderItem = await dbGetExpenseGroupHighOrder();
   const order = highOrderItem?.order ? highOrderItem.order + 1 : 1;
 
-  await createExpenseGroup({name, order, hidden, deleted: false});
+  await dbCreateExpenseGroup({name, order, hidden, deleted: false});
 }
 
 export async function action({request}: ActionArgs) {
@@ -38,7 +38,7 @@ export async function action({request}: ActionArgs) {
 
     switch (action) {
       case "delete":
-        await deleteExpenseGroup(idNumber);
+        await dbDeleteExpenseGroup(idNumber);
         break;
 
       case "down":

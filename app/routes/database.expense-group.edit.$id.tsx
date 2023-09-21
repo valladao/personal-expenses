@@ -2,7 +2,7 @@ import {useLoaderData, useOutletContext} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import FormInputs from "~/components/compositions/form-inputs";
 import GenericTable from "~/components/compositions/generic-table";
-import {dbGetExpenseGroupItem, dbUpdateExpenseGroupItem, deleteExpenseGroup} from "~/models/expense-group.server";
+import {dbGetExpenseGroupItem, dbUpdateExpenseGroupItem, dbDeleteExpenseGroup} from "~/models/expense-group.server";
 import {changeExpenseGroupOrder} from "./database.expense-group";
 import TableEntry from "~/components/elements/table-entry";
 
@@ -42,7 +42,7 @@ export async function action({request, params}: ActionArgs) {
 
     switch (action) {
       case "delete":
-        await deleteExpenseGroup(idNumber);
+        await dbDeleteExpenseGroup(idNumber);
         break;
 
       case "down":
