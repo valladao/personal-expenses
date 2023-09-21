@@ -8,6 +8,7 @@ import TableEntry from "~/components/elements/table-entry";
 
 import type {ActionArgs} from "@remix-run/node";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
+import {getIntentData} from "~/utils";
 
 async function createExpenseGroupButton({name, hidden}: {name: string, hidden: boolean}) {
   const highOrderItem = await dbGetExpenseGroupHighOrder();
@@ -32,9 +33,10 @@ export async function action({request}: ActionArgs) {
     })
 
   } else {
-    const intentString = intent?.toString();
-    const [action, idString] = intentString?.split("-") || [];
-    const idNumber = parseInt(idString, 10);
+    const [action, idNumber] = getIntentData(intent);
+
+    invariant(action, "Button action not defined!");
+    invariant(typeof idNumber === "number", "Expense Group ID invalid!");
 
     switch (action) {
       case "delete":

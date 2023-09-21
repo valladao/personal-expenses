@@ -8,6 +8,7 @@ import TableEntry from "~/components/elements/table-entry";
 
 import {json, type ActionArgs, type LoaderArgs, redirect} from "@remix-run/node";
 import type {ExpenseGroup as ExpenseGroupType} from "@prisma/client";
+import {getIntentData} from "~/utils";
 
 export async function loader({params}: LoaderArgs) {
   invariant(params.id, "Expense group ID missing!")
@@ -36,9 +37,10 @@ export async function action({request, params}: ActionArgs) {
     return redirect("/database/expense-group")
 
   } else {
-    const intentString = intent?.toString();
-    const [action, idString] = intentString?.split("-") || [];
-    const idNumber = parseInt(idString, 10);
+    const [action, idNumber] = getIntentData(intent);
+
+    invariant(action, "Action not defined!");
+    invariant(typeof idNumber === "number", "Invalid idNumber!");
 
     switch (action) {
       case "delete":
