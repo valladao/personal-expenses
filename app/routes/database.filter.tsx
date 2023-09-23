@@ -1,3 +1,9 @@
+import DatabaseLayout from "~/components/database-layout";
+
 export default function Filter() {
-  return <p>Route OK</p>
+  return (
+    <DatabaseLayout pageTitle="Filter">
+      <p>Route OK</p>
+    </DatabaseLayout>
+  )
 }

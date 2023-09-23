@@ -1,3 +1,9 @@
+import DatabaseLayout from "~/components/database-layout";
+
 export default function Expense() {
-  return <p>Route OK</p>
+  return (
+    <DatabaseLayout pageTitle="Expense">
+      <p>Route OK</p>
+    </DatabaseLayout>
+  )
 }

@@ -1,3 +1,9 @@
+import DatabaseLayout from "~/components/database-layout";
+
 export default function Account() {
-  return <p>Route OK</p>
+  return (
+    <DatabaseLayout pageTitle="Account">
+      <p>Route OK</p>
+    </DatabaseLayout>
+  )
 }
