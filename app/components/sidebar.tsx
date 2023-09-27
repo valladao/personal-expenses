@@ -58,7 +58,7 @@ export type LinksListType = typeof databaseLinks;
 
 export default function Sidebar() {
   return (
-    <dialog id="sidebar" className="w-64 bg-zinc-800 p-4 m-0 h-full">
+    <dialog id="sidebar" className="w-64 bg-zinc-800 p-4 m-0 h-full max-h-fit">
       <div className="flex items-center justify-between">
         <Link to="/">
           <h1 className="text-xl font-bold mr-4 text-zinc-100">Expenses App</h1>
