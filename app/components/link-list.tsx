@@ -12,7 +12,7 @@ export default function LinkList({linkArray, listName}: {linkArray: LinksListTyp
           <Link
             key={index}
             to={link.href}
-            className="block py-1 pl-2 hover:bg-zinc-700 hover:text-white text-zinc-100"
+            className="sidebarLink block py-1 pl-2 hover:bg-zinc-700 hover:text-white text-zinc-100"
           >
             {link.innerText}
           </Link>
