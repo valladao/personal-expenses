@@ -2,7 +2,7 @@ import {Form, Link} from "@remix-run/react";
 
 export default function FormInputs({formTitle, submitTitle, submitIntent, cancel = false, selectedItem = null}: {formTitle: string, submitTitle: string, submitIntent: string, cancel?: boolean, selectedItem?: {name: string, hidden: boolean, id: number} | null}) {
   return (
-    <>
+    <div className="w-1/2 p-4">
       <h2 className="text-2xl font-bold mb-4">{formTitle}</h2>
 
       <Form method="post" reloadDocument>
@@ -34,6 +34,6 @@ export default function FormInputs({formTitle, submitTitle, submitIntent, cancel
         </div>
 
       </Form>
-    </>
+    </div>
   )
 }

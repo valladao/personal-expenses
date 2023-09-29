@@ -2,7 +2,7 @@ import {Form} from "@remix-run/react";
 
 export default function GenericTable({children}: {children: React.ReactNode}) {
   return (
-    <>
+    <div className="w-1/2 p-4">
       <h2 className="text-2xl font-bold mb-4">Expense Groups</h2>
       <Form method="post" reloadDocument>
         <table className="min-w-full bg-white border border-gray-200 border-separate rounded-md">
@@ -18,6 +18,6 @@ export default function GenericTable({children}: {children: React.ReactNode}) {
           </tbody>
         </table>
       </Form>
-    </>
+    </div>
   )
 }
